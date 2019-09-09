@@ -1,8 +1,8 @@
 import pandas as pd
 import numpy as np
 
-test_df = pd.read_csv('test.csv')
-#train_df = pd.read_csv('train.csv')
+test_df = pd.read_csv(r'C:\Users\USER\Dropbox (Personal)\Data Science Projects\TitanicPredictor\test.csv')
+train_df = pd.read_csv(r'C:\Users\USER\Dropbox (Personal)\Data Science Projects\TitanicPredictor\train.csv')
 
-print(test_df.head())
-print(train_df.head())
+print(test_df)
+print(train_df)
