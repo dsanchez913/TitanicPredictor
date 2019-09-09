@@ -1,2 +1,2 @@
 # TitanicPredictor
-Python project which predicts survival outcome for Titanic passengers
+Python project that predicts survival outcome for Titanic passengers
