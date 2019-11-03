@@ -120,4 +120,4 @@ subm = pd.DataFrame({
     })
 
 #subm.to_csv(r'C:\Users\USER\Dropbox (Personal)\Data Science Projects\TitanicPredictor\submission_LR.csv',index=False)
-subm.to_csv('/Users/dsanchez/Dropbox/Data Science Projects/TitanicPredictor/submission_LR.csv')
+subm.to_csv('submission_LR.csv')
