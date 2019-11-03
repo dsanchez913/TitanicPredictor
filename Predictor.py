@@ -4,8 +4,8 @@ import numpy as np
 from sklearn.linear_model import LogisticRegression
 
 
-test_df = pd.read_csv(r'C:\Users\USER\Dropbox (Personal)\Data Science Projects\TitanicPredictor\test.csv')
-train_df = pd.read_csv(r'C:\Users\USER\Dropbox (Personal)\Data Science Projects\TitanicPredictor\train.csv')
+test_df = pd.read_csv('/Users/dsanchez/Dropbox/Data Science Projects/TitanicPredictor/test.csv')
+train_df = pd.read_csv('/Users/dsanchez/Dropbox/Data Science Projects/TitanicPredictor/train.csv')
 
 full_ds=[train_df,test_df]
 
@@ -106,16 +106,18 @@ X_train = train_df.drop("Survived", axis=1)
 Y_train = train_df["Survived"]
 X_test  = test_df.drop("PassengerId", axis=1).copy()
 
-print(X_test.isnull().sum())
-print(X_test.isna().sum())
+
 
 logreg = LogisticRegression()
 logreg.fit(X_train, Y_train)
 Y_pred = logreg.predict(X_test)
+
+print(Y_pred)
 
 subm = pd.DataFrame({
         "PassengerId": test_df["PassengerId"],
         "Survived": Y_pred
     })
 
-subm.to_csv(r'C:\Users\USER\Dropbox (Personal)\Data Science Projects\TitanicPredictor\submission_LR.csv',index=False)
+#subm.to_csv(r'C:\Users\USER\Dropbox (Personal)\Data Science Projects\TitanicPredictor\submission_LR.csv',index=False)
+subm.to_csv('/Users/dsanchez/Dropbox/Data Science Projects/TitanicPredictor/submission_LR.csv')
