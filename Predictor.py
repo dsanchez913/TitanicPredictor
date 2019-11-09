@@ -3,6 +3,15 @@ import numpy as np
 
 from sklearn.linear_model import LogisticRegression
 
+from sklearn.linear_model import LogisticRegression
+from sklearn.svm import SVC, LinearSVC
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.neighbors import KNeighborsClassifier
+from sklearn.naive_bayes import GaussianNB
+from sklearn.linear_model import Perceptron
+from sklearn.linear_model import SGDClassifier
+from sklearn.tree import DecisionTreeClassifier
+
 
 test_df = pd.read_csv('/Users/dsanchez/Dropbox/Data Science Projects/TitanicPredictor/test.csv')
 train_df = pd.read_csv('/Users/dsanchez/Dropbox/Data Science Projects/TitanicPredictor/train.csv')
@@ -99,9 +108,12 @@ for dataset in full_ds:
     dataset['Embarked'] = dataset['Embarked'].fillna(freq_port)
     dataset['Embarked'] = dataset['Embarked'].map( {'S': 0, 'C': 1, 'Q': 2} ).astype(int)
 
+Y_pred_arr=[]
+acc_arr=[]
 
-#Test the linear regresion algorithm
-
+#Test the logistic regresion algorithm
+print()
+print('----- Logistic Regression --------')
 X_train = train_df.drop("Survived", axis=1)
 Y_train = train_df["Survived"]
 X_test  = test_df.drop("PassengerId", axis=1).copy()
@@ -110,14 +122,152 @@ X_test  = test_df.drop("PassengerId", axis=1).copy()
 
 logreg = LogisticRegression()
 logreg.fit(X_train, Y_train)
-Y_pred = logreg.predict(X_test)
+Y_pred_log = logreg.predict(X_test)
 
-print(Y_pred)
+print('Y_pred for Logistic Regression:')
+print()
+print(Y_pred_log)
 
+acc_log = round(logreg.score(X_train, Y_train) * 100, 2)
+
+print('Score for logistic regression: '+str(acc_log))
+
+Y_pred_arr.append(Y_pred_log)
+acc_arr.append(acc_log)
+
+#Test the SVM algorithm
+print()
+print('----- Support Vector Machine --------')
+
+svc = SVC()
+svc.fit(X_train, Y_train)
+Y_pred_svm = svc.predict(X_test)
+acc_svc = round(svc.score(X_train, Y_train) * 100, 2)
+
+print('Y_pred for SVM:')
+print()
+print(Y_pred_svm)
+print('Score for suport vector machine: '+str(acc_svc))
+Y_pred_arr.append(Y_pred_svm)
+acc_arr.append(acc_svc)
+
+#Test the k-nearest neighbors algorithm
+print()
+print('----- k-nearest neighbors --------')
+
+knn = KNeighborsClassifier(n_neighbors = 3)
+knn.fit(X_train, Y_train)
+Y_pred_knn = knn.predict(X_test)
+acc_knn = round(knn.score(X_train, Y_train) * 100, 2)
+
+print('Y_pred for SVM:')
+print()
+print(Y_pred_knn)
+print('Score for k-nearest neighbors: '+str(acc_knn))
+Y_pred_arr.append(Y_pred_knn)
+acc_arr.append(acc_knn)
+
+# Test the Gaussian Naive Bayes algorithm
+print()
+print('----- Gaussian Naive Bayes --------')
+
+gaussian = GaussianNB()
+gaussian.fit(X_train, Y_train)
+Y_pred_gaussian = gaussian.predict(X_test)
+acc_gaussian = round(gaussian.score(X_train, Y_train) * 100, 2)
+
+print('Y_pred for Gaussian Naive Bayes:')
+print()
+print(Y_pred_gaussian)
+print('Score for Gaussian Naive Bayes: '+str(acc_gaussian))
+Y_pred_arr.append(Y_pred_gaussian)
+acc_arr.append(acc_gaussian)
+
+# Test the Perceptron algorithm
+print()
+print('----- Perceptron --------')
+perceptron = Perceptron()
+perceptron.fit(X_train, Y_train)
+Y_pred_perc = perceptron.predict(X_test)
+acc_perceptron = round(perceptron.score(X_train, Y_train) * 100, 2)
+
+print('Y_pred for perceptron:')
+print()
+print(Y_pred_perc)
+print('Score for perceptron: '+str(acc_perceptron))
+Y_pred_arr.append(Y_pred_perc)
+acc_arr.append(acc_perceptron)
+
+# Test the Linear SVC algorithm
+print()
+print('----- Linear SVC --------')
+linear_svc = LinearSVC()
+linear_svc.fit(X_train, Y_train)
+Y_pred_linsvc = linear_svc.predict(X_test)
+acc_linear_svc = round(linear_svc.score(X_train, Y_train) * 100, 2)
+
+print('Y_pred for linear SVC:')
+print()
+print(Y_pred_linsvc)
+print('Score for perceptron: '+str(acc_linear_svc))
+Y_pred_arr.append(Y_pred_linsvc)
+acc_arr.append(acc_linear_svc)
+
+# Test the Stochastic Gradient Descent algorithm
+print()
+print('----- Stochastic Gradient Descent --------')
+sgd = SGDClassifier()
+sgd.fit(X_train, Y_train)
+Y_pred_sgd = sgd.predict(X_test)
+acc_sgd = round(sgd.score(X_train, Y_train) * 100, 2)
+
+print('Y_pred for SGD:')
+print()
+print(Y_pred_sgd)
+print('Score for SGD: '+str(acc_sgd))
+Y_pred_arr.append(Y_pred_sgd)
+acc_arr.append(acc_sgd)
+
+# Test the Decision Tree algorithm
+print()
+print('----- Decision Tree --------')
+decision_tree = DecisionTreeClassifier()
+decision_tree.fit(X_train, Y_train)
+Y_pred_dt = decision_tree.predict(X_test)
+acc_decision_tree = round(decision_tree.score(X_train, Y_train) * 100, 2)
+
+print('Y_pred for Decision Tree:')
+print()
+print(Y_pred_dt)
+print('Score for Decision Tree: '+str(acc_decision_tree))
+Y_pred_arr.append(Y_pred_dt)
+acc_arr.append(acc_decision_tree)
+
+# Test the Random Forest algorithm
+print()
+print('----- Random Forest --------')
+random_forest = RandomForestClassifier(n_estimators=100)
+random_forest.fit(X_train, Y_train)
+Y_pred_rf = random_forest.predict(X_test)
+random_forest.score(X_train, Y_train)
+acc_random_forest = round(random_forest.score(X_train, Y_train) * 100, 2)
+
+print('Y_pred for Random Forest:')
+print()
+print(Y_pred_rf)
+print('Score for Random Forest: '+str(acc_random_forest))
+Y_pred_arr.append(Y_pred_rf)
+acc_arr.append(acc_random_forest)
+
+#Select the best result
+np_acc= np.array(acc_arr)
+best=np.where(np_acc==np.amax(np_acc))[0][0]
+print('Best index: '+str(best))
+Y_best=Y_pred_arr[best]
 subm = pd.DataFrame({
         "PassengerId": test_df["PassengerId"],
-        "Survived": Y_pred
+        "Survived": Y_best
     })
 
 #subm.to_csv(r'C:\Users\USER\Dropbox (Personal)\Data Science Projects\TitanicPredictor\submission_LR.csv',index=False)
-subm.to_csv('submission_LR.csv')
+subm.to_csv('submission_best.csv', index=False)
